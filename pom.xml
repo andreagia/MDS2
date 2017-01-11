@@ -151,15 +151,6 @@
 
     <build>
         <finalName>MDS2</finalName>
-        <filters>
-            <filter>profiles/${build.profile.id}/database.properties</filter>
-        </filters>
-        <resources>
-            <resource>
-                <filtering>true</filtering>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
 
         <plugins>
             <plugin>
