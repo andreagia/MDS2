@@ -1,4 +1,4 @@
-package com.cirmmp.mds2.controller;
+package org.cirmmp.mds2.controller;
 
 
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ public class Access  {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView helloWorld(){
 
-        ModelAndView model = new ModelAndView("HelloWorldPage");
+        ModelAndView model = new ModelAndView("helloworld");
         model.addObject("msg", "hello world");
 
         return model;
