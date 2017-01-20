@@ -7,6 +7,8 @@
 
 
     <mvc:annotation-driven />
+    <mvc:resources mapping="/html/**" location="/html/"
+                   cache-period="31556926"/>
 
     <context:component-scan base-package="org.cirmmp.mds2.controller" />
 
@@ -20,4 +22,51 @@
         </property>
     </bean>
 
+    <context:property-placeholder location="classpath:hibernate.properties"/>
+
+
+    <bean
+            class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                    <constructor-arg name="objectMapper" ref="jacksonObjectMapper" />
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="jacksonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+
+    <!-- data source, sessionfactory, hiberate template & transaction manager -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+    <bean id="md2sSessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="org.cirmmp.mds2"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                    ${hibernate.dialect}
+                </prop>
+                <prop key="hibernate.hbm2ddl.auto">
+                    ${hibernate.hbm2ddl.auto}
+                </prop>
+                <prop key="hibernate.show_sql">
+                    ${hibernate.show.sql}
+                </prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="md2sSessionFactory"/>
+    </bean>
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+        <property name="sessionFactory" ref="md2sSessionFactory"/>
+    </bean>
 </beans>
