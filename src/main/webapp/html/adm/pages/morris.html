@@ -379,6 +379,9 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+
+
+            // per popolare http://productdesignsagain.blogspot.it/2016/01/making-morris-graph-from-bootstrap.html
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-6">
@@ -417,7 +420,7 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <script>
-                                var blob, stage;
+                                /*var blob, stage;
                                 function load( o ){
                                     stage.loadFile( blob, { ext: "mmtf", defaultRepresentation: true } );
                                 }
@@ -429,7 +432,7 @@
                                     if( stage ) load();
                                 } );
                                 xhr.responseType = "arraybuffer";
-                                xhr.send( null );
+                                xhr.send( null );*/
                             </script>
                             <script src="/html/js/ngl/ngl.js"></script>
                             <script>
@@ -441,7 +444,8 @@
                                     function handleResize(){ stage.handleResize(); }
                                     window.addEventListener( "orientationchange", handleResize, false );
                                     window.addEventListener( "resize", handleResize, false );
-                                    if( blob ) load();
+                                    stage.loadFile(  "/html/data/pdb/1iua.pdb", { defaultRepresentation: true } );
+                                    //if( blob ) load();
                                 } );
 
                             </script>
