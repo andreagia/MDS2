@@ -52,7 +52,8 @@
 						<entry key="A">
 							<bean class="org.cirmmp.elfinder.localfs.LocalFsVolume">
 								<property name="name" value="ONEDATA" />
-								<property name="rootDir" value="/tmp/onedata" />
+                                <property name="rootDir" value="/Users/andrea/IdeaProjects/MDS2/src/main/webapp/html/data" />
+								<!--<property name="rootDir" value="/tmp/onedata" />-->
 							</bean>
 						</entry>
 						<entry key="B">
