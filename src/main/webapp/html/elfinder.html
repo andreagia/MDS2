@@ -36,7 +36,7 @@
                     url: '/elfinder-servlet/connector',
                     commands: myCommands,
 
-                    getFileCallback: function(file) {
+                   /* getFileCallback: function(file) {
 
                         console.log("file");
                         console.log(file);
@@ -55,21 +55,59 @@
                         //stage.loadFile(  "/html/data/pdb/1iua.pdb", { defaultRepresentation: true } );
                         //if( blob ) load();
 
-                    }
-                /*    handlers: {
-                        select: function (event, elfinderInstance) {
-                            console.log(event.data);
-                            console.log(event.data.selected); // selected files hashes list
+                    }*/
+                    handlers: {
+                        select: function ( event, elfinderInstance) {
+
+                            console.log(event);
+
+                            var selected = event.data.selected;
+
+                            if (selected.length) {
+                                var objef = elfinderInstance.file(selected[0]);
+                                console.log(objef);
+                                console.log(objef['name']);
+                                console.log(objef['mime']);
+                                console.log(elfinderInstance);
+                            }
+
+                            //console.log(event.data);
+                            //console.log(event.data.selected); // selected files hashes list
                         },
                         dblclick: function (event, elfinderInstance) {
-                            event.preventDefault();
-                            elfinderInstance.exec('getfile')
-                                .done(function () {
-                                    elfinderInstance.exec('edit');
-                                })
-                                .fail(function () {
-                                    elfinderInstance.exec('open');
-                                });
+                            console.log("DBL INI----------");
+                            console.log(event);
+                            var selected = event.data.file;
+                            console.log(elfinderInstance);
+                            var objep = elfinderInstance.path(selected);
+                            var objef = elfinderInstance.file(selected);
+                            var objeu = elfinderInstance.url(selected);
+                            console.log("OBJEP");
+                            console.log(objep);
+                            console.log("OBJEF");
+                            console.log(objef);
+                            console.log("OBJEU");
+                            console.log(objeu);
+                            console.log(objef['name']);
+                            console.log(objef['mime']);
+                            console.log(elfinderInstance);
+                            console.log("DBL END-----------");
+                            if(objef['mime'] == "application/x-palm-database"){
+                                event.preventDefault();
+                                var pdb =objep.replace("ONEDATA","/html/data");
+                                console.log(pdb);
+                                stage = new NGL.Stage( "viewport" );
+                                stage.viewer.container.addEventListener( "dblclick", function(){
+                                    stage.toggleFullscreen();
+                                } );
+                                function handleResize(){ stage.handleResize(); }
+                                window.addEventListener( "orientationchange", handleResize, false );
+                                window.addEventListener( "resize", handleResize, false );
+                                stage.loadFile(pdb, { defaultRepresentation: true } );
+                            }
+
+
+
                         }
                     },
                     getFileCallback: function (files, fm) {
@@ -79,7 +117,7 @@
                     // editor example
                     //https://github.com/Studio-42/elFinder/wiki/Using-custom-editor-to-edit-files-within-elfinder
 
-                    commandsOptions: {
+                    /*commandsOptions: {
                         quicklook: {
                             width: 640,  // Set default width/height voor quicklook
                             height: 480
