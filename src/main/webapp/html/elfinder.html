@@ -12,7 +12,6 @@
 		<!-- elFinder CSS (REQUIRED) -->
 		<link rel="stylesheet" type="text/css" href="/webjars/elfinder/2.1.20/css/elfinder.min.css">
 		<link rel="stylesheet" type="text/css" href="/webjars/elfinder/2.1.20/css/theme.css">
-
 		<!-- elFinder JS (REQUIRED) -->
 		<script src="/webjars/elfinder/2.1.20/js/elfinder.min.js"></script>
 
@@ -100,6 +99,7 @@
                                 stage.viewer.container.addEventListener( "dblclick", function(){
                                     stage.toggleFullscreen();
                                 } );
+
                                 function handleResize(){ stage.handleResize(); }
                                 window.addEventListener( "orientationchange", handleResize, false );
                                 window.addEventListener( "resize", handleResize, false );
