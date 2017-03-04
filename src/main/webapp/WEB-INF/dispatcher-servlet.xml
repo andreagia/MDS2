@@ -11,7 +11,7 @@
                    cache-period="31556926"/>
     <mvc:resources mapping="/webjars/**" location="/webjars/"/>
 
-    <context:component-scan base-package="org.cirmmp.mds2.controller" />
+    <context:component-scan base-package="org.cirmmp.mds2" />
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
@@ -23,8 +23,20 @@
         </property>
     </bean>
 
-    <context:property-placeholder location="classpath:hibernate.properties"/>
+    <mvc:annotation-driven>
+        <mvc:async-support default-timeout="30" task-executor="taskExecutor"/>
+    </mvc:annotation-driven>
+    <!-- modify the parameters of thread pool -->
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="5"/>
+        <property name="maxPoolSize" value="50"/>
+        <property name="queueCapacity" value="10"/>
+        <property name="keepAliveSeconds" value="120"/>
+    </bean>
 
+
+
+    <context:property-placeholder location="classpath:hibernate.properties"/>
 
     <bean
             class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
@@ -41,10 +53,10 @@
 
     <!-- data source, sessionfactory, hiberate template & transaction manager -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${jdbc.driver}"></property>
-        <property name="url" value="${jdbc.url}"></property>
-        <property name="username" value="${jdbc.username}"></property>
-        <property name="password" value="${jdbc.password}"></property>
+        <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+        <property name="url" value="jdbc:hsqldb:mem:dataSource" />
+        <property name="username" value="sa" />
+        <property name="password" value="" />
     </bean>
     <bean id="md2sSessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
