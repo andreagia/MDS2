@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 
 @Controller
-@RequestMapping("/welcome")
+@RequestMapping("/service")
 public class Access  {
 
     Logger logger = LoggerFactory.getLogger(Access.class);
@@ -61,7 +61,7 @@ public class Access  {
 
 
     @RequestMapping(value="runShell",method = RequestMethod.GET)
-    public ModelAndView runShell() throws Exception {
+    public String runShell() throws Exception {
 
 
         String fullPath = context.getRealPath("/WEB-INF/classes/script/create_bv_inpt.py");
@@ -69,12 +69,12 @@ public class Access  {
         String webinf = fullPath.substring(0, fullPath.lastIndexOf("WEB-INF")+7);
 
         logger.info("SONO IN");
-        logger.info("/bin/bash " + path + "runcpptraj.sh" );
+        logger.info("/bin/bash " + path + "runcpptraj.sh "+ path + " " + webinf);
         logger.info(webinf);
 
 
         //Future<String> page1 = runAnalysis.executeCommand("traceroute www.google.com");
-        Future<String> page1 = runAnalysis.executeCommand("/bin/bash " + path + "runcpptraj.sh" );
+        Future<String> page1 = runAnalysis.executeCommand("/bin/bash " + path + "runcpptraj.sh "+ path + " " + webinf  );
         logger.info("execute");
 
          String risp = "pippo";
@@ -94,30 +94,31 @@ public class Access  {
         ModelAndView model = new ModelAndView("helloworld");
         model.addObject("msg", risp);
 
-        return model;
+        return "redirect:/html/adm/pages/morris.html";
+        //return model;
     }
+
+
+
 
     @RequestMapping(value = "/dashboard")
     public @ResponseBody
     String ShowUserDetails()  {
+
+        String fullPath = context.getRealPath("/WEB-INF/classes/script/create_bv_inpt.py");
+        String webinf = fullPath.substring(0, fullPath.lastIndexOf("WEB-INF"));
         Gson gson = new Gson();
 
         FileS2 s2 = new FileS2();
 
         try {
-            FileReader filein = new FileReader("/tmp/MDS2/tmp/ired_res.json");
+            FileReader filein = new FileReader(webinf+"/html/data/ired_res.json");
             s2 = gson.fromJson(filein, FileS2.class);
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex2) {
             ex2.printStackTrace();
         }
-//        arrayBean o1 = new arrayBean();
-//        o1.setPeriod();
-//        o1.setIpad();
-//        o1.setIphone();
-//        o1.setItouch();
-
         String jsonString = gson.toJson(s2);
         logger.info("JSON");
         logger.info(jsonString);
@@ -125,5 +126,23 @@ public class Access  {
 
         return gson.toJson(s2);
     }
+
+    @RequestMapping(value = "/dashboard1")
+    public @ResponseBody
+    String ShowUserDetails1() {
+        Gson gson = new Gson();
+        arrayBean o1 = new arrayBean();
+        o1.setPeriod();
+        o1.setIpad();
+        o1.setIphone();
+        o1.setItouch();
+
+        String jsonString = gson.toJson(o1);
+        logger.info("JSON");
+        logger.info(jsonString);
+
+        return gson.toJson(o1);
+    }
+
 
 }
