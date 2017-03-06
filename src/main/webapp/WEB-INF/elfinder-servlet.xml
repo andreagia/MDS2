@@ -52,14 +52,14 @@
 						<entry key="A">
 							<bean class="org.cirmmp.elfinder.localfs.LocalFsVolume">
 								<property name="name" value="ONEDATA" />
-                                <property name="rootDir" value="/tmp/MDS2" />
+                                <property name="rootDir" value="/tmp/onedata" />
 								<!--<property name="rootDir" value="/tmp/onedata" />-->
 							</bean>
 						</entry>
 						<entry key="B">
 							<bean class="org.cirmmp.elfinder.localfs.LocalFsVolume">
 								<property name="name" value="Local" />
-								<property name="rootDir" value="/tmp/local" />
+								<property name="rootDir" value="/tmp/mds2" />
 							</bean>
 						</entry>
 					</map>

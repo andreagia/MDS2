@@ -2,8 +2,8 @@
 SOURCE="${BASH_SOURCE[0]}"
 SCRIPT=${1}
 WEBINF=${2}
-DINPUT=/tmp/MDS2
-export AMBRHOME=/Users/andrea/bin/amber16
+DINPUT=/tmp/mds2
+export AMBRHOME=/usr/local/amber16
 
 
 if pgrep -x "ccptraj" > /dev/null
@@ -13,10 +13,10 @@ then
 else
     cd $DINPUT/tmp
     rm $DINPUT/tmp/*
-    python $SCRIPT/create_bv_inpt.py -v nh -p /tmp/MDS2/prot.pdb -t /tmp/MDS2/prod?.nc > /tmp/MDS2/mds2.in
-    $AMBRHOME/bin/cpptraj -i /tmp/MDS2/mds2.in
+    python $SCRIPT/create_bv_inpt.py -v nh -p $DINPUT/prot.pdb -t $DINPUT/prod?.nc > $DINPUT/mds2.in
+    $AMBRHOME/bin/cpptraj -i $DINPUT/mds2.in
     python $SCRIPT/csv2json.py
-    cp /tmp/MDS2/prot.pdb $WEBINF/../html/data/
+    cp $DINPUT/prot.pdb $WEBINF/../html/data/
     cp $DINPUT/tmp/ired_res.json $WEBINF/../html/data/
 
 
