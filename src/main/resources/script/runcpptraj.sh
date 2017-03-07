@@ -3,8 +3,9 @@ SOURCE="${BASH_SOURCE[0]}"
 SCRIPT=${1}
 WEBINF=${2}
 DINPUT=/tmp/mds2
-export AMBRHOME=/usr/local/amber16
 
+export AMBRHOME=/usr/local/amber16
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$AMBRHOME/lib
 
 if pgrep -x "ccptraj" > /dev/null
 then
