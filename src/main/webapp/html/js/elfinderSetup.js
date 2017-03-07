@@ -60,9 +60,9 @@ $(document).ready(function () {
                 console.log("OBJEP");
                 console.log(objep);
                 console.log("OBJEF");
-                console.log(objef.url(file.hash));
+                console.log(objef);
                 console.log("OBJEU");
-                console.log(objeu.url(file.hash));
+                console.log(objeu);
                 console.log(objef['name']);
                 console.log(objef['mime']);
                 console.log(elfinderInstance);
@@ -73,16 +73,30 @@ $(document).ready(function () {
                     //     var pdb =objep.replace("ONEDATA","/html/data");}
                     // else {var pdb =objep.replace("Local","/html/data");}
                     //console.log(pdb);
-                    $('#viewport').children().remove();
-                    stage = new NGL.Stage( "viewport" );
-                    stage.viewer.container.addEventListener( "dblclick", function(){
-                        stage.toggleFullscreen();
-                    } );
+                    var urlj =objeu.replace("cmd=file","cmd=get");
+                    console.log(urlj);
+                    $.getJSON(urlj, function (data) {
+                        console.log(data);
+                        var pdb = data.content;
+                        console.log("=====PDB=====")
+                        console.log(pdb);
+                        var stringBlob = new Blob( [ pdb ], { type: 'text/plain'} );
+                        $('#viewport').children().remove();
+                        stage = new NGL.Stage( "viewport" );
+                        stage.viewer.container.addEventListener( "dblclick", function(){
+                            stage.toggleFullscreen();
+                        } );
 
-                    function handleResize(){ stage.handleResize(); }
-                    window.addEventListener( "orientationchange", handleResize, false );
-                    window.addEventListener( "resize", handleResize, false );
-                    stage.loadFile(objeu, { defaultRepresentation: true } );
+                        function handleResize(){ stage.handleResize(); }
+                        window.addEventListener( "orientationchange", handleResize, false );
+                        window.addEventListener( "resize", handleResize, false );
+                        stage.loadFile(stringBlob, {  ext: "pdb"  ,defaultRepresentation: true } );
+
+                    });
+
+
+
+
 
                 }
 
@@ -91,9 +105,9 @@ $(document).ready(function () {
             }
         },
         getFileCallback: function (files, fm) {
-            var url = fm.convAbsUrl(fm.url(file.hash));
-            console.log("-----URL----");
-            console.log(url);
+            //var url = fm.convAbsUrl(fm.url(file.hash));
+            //console.log("-----URL----");
+            //console.log(url);
 
             return false;
         },
