@@ -60,17 +60,19 @@ $(document).ready(function () {
                 console.log("OBJEP");
                 console.log(objep);
                 console.log("OBJEF");
-                console.log(objef);
+                console.log(objef.url(file.hash));
                 console.log("OBJEU");
-                console.log(objeu);
+                console.log(objeu.url(file.hash));
                 console.log(objef['name']);
                 console.log(objef['mime']);
                 console.log(elfinderInstance);
                 console.log("DBL END-----------");
                 if(objef['mime'] == "application/x-palm-database"){
                     event.preventDefault();
-                    var pdb =objep.replace("ONEDATA","/html/data");
-                    console.log(pdb);
+                    // if(objep.contain("ONEDATA")){
+                    //     var pdb =objep.replace("ONEDATA","/html/data");}
+                    // else {var pdb =objep.replace("Local","/html/data");}
+                    //console.log(pdb);
                     $('#viewport').children().remove();
                     stage = new NGL.Stage( "viewport" );
                     stage.viewer.container.addEventListener( "dblclick", function(){
@@ -80,7 +82,7 @@ $(document).ready(function () {
                     function handleResize(){ stage.handleResize(); }
                     window.addEventListener( "orientationchange", handleResize, false );
                     window.addEventListener( "resize", handleResize, false );
-                    stage.loadFile(pdb, { defaultRepresentation: true } );
+                    stage.loadFile(objeu, { defaultRepresentation: true } );
 
                 }
 
@@ -89,6 +91,10 @@ $(document).ready(function () {
             }
         },
         getFileCallback: function (files, fm) {
+            var url = fm.convAbsUrl(fm.url(file.hash));
+            console.log("-----URL----");
+            console.log(url);
+
             return false;
         },
 

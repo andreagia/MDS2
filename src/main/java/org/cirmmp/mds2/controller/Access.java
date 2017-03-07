@@ -65,16 +65,19 @@ public class Access  {
 
 
         String fullPath = context.getRealPath("/WEB-INF/classes/script/create_bv_inpt.py");
+        String dataPath = context.getRealPath("/html/tmp");
         String path = fullPath.substring(0, fullPath.lastIndexOf("/")+1);
         String webinf = fullPath.substring(0, fullPath.lastIndexOf("WEB-INF")+7);
 
         logger.info("SONO IN");
-        logger.info("/bin/bash " + path + "runcpptraj.sh "+ path + " " + webinf);
+        logger.info("/bin/bash " + path + "runcpptraj.sh "+ path + " " + dataPath);
         logger.info(webinf);
+        logger.info("DATAPATH");
+        logger.info(dataPath);
 
 
         //Future<String> page1 = runAnalysis.executeCommand("traceroute www.google.com");
-        Future<String> page1 = runAnalysis.executeCommand("/bin/bash " + path + "runcpptraj.sh "+ path + " " + webinf  );
+        Future<String> page1 = runAnalysis.executeCommand("/bin/bash " + path + "runcpptraj.sh "+ path + " " + dataPath  );
         logger.info("execute");
 
          String risp = "pippo";
@@ -105,14 +108,14 @@ public class Access  {
     public @ResponseBody
     String ShowUserDetails()  {
 
-        String fullPath = context.getRealPath("/WEB-INF/classes/script/create_bv_inpt.py");
-        String webinf = fullPath.substring(0, fullPath.lastIndexOf("WEB-INF"));
+
+        String webinf = context.getRealPath("/html/tmp");
         Gson gson = new Gson();
 
         FileS2 s2 = new FileS2();
 
         try {
-            FileReader filein = new FileReader(webinf+"/html/data/ired_res.json");
+            FileReader filein = new FileReader(webinf+"/ired_res.json");
             s2 = gson.fromJson(filein, FileS2.class);
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
