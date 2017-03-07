@@ -43,7 +43,7 @@ public class Access  {
     @Autowired
     ServletContext context;
 
-    @RequestMapping("helloAsync")
+    /*@RequestMapping("helloAsync")
     public Callable<String> sayHelloAsync() {
         logger.info("Entering controller");
 
@@ -57,8 +57,31 @@ public class Access  {
 
         logger.info("Leaving  controller");
         return asyncTask;
-    }
+    }*/
 
+
+    @RequestMapping(value="rmShell",method = RequestMethod.GET)
+    public String rmShell() throws Exception {
+
+        String dataPath = context.getRealPath("/html/tmp");
+        logger.info("RIMUOVO DATA");
+        String command_rm = "rm " + dataPath +"/prot.pdb && rm "+ dataPath +"/ired_res.json";
+        logger.info(command_rm );
+        Future<String> page1 = runAnalysis.executeCommand(command_rm);
+
+        String risp = "";
+
+        if (page1.isDone()) {
+            risp = page1.get(1L, TimeUnit.SECONDS);
+
+            logger.info("FINITO");
+        } else {
+            logger.info("ASPETTO");
+            risp = "sta' girando";
+        }
+
+        return "redirect:/html/adm/pages/morris.html";
+    }
 
     @RequestMapping(value="runShell",method = RequestMethod.GET)
     public String runShell() throws Exception {
@@ -70,14 +93,15 @@ public class Access  {
         String webinf = fullPath.substring(0, fullPath.lastIndexOf("WEB-INF")+7);
 
         logger.info("SONO IN");
-        logger.info("/bin/bash " + path + "runcpptraj.sh "+ path + " " + dataPath);
+        String command_run = "/bin/bash " + path + "runcpptraj.sh "+ path + " " + dataPath;
+        logger.info(command_run);
         logger.info(webinf);
         logger.info("DATAPATH");
         logger.info(dataPath);
 
 
         //Future<String> page1 = runAnalysis.executeCommand("traceroute www.google.com");
-        Future<String> page1 = runAnalysis.executeCommand("/bin/bash " + path + "runcpptraj.sh "+ path + " " + dataPath  );
+        Future<String> page1 = runAnalysis.executeCommand(command_run);
         logger.info("execute");
 
          String risp = "pippo";
