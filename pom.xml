@@ -279,80 +279,26 @@
                 <version>9.2.9.v20150224</version>
             </plugin>
 
-            <!--<plugin>-->
-                <!--<artifactId>maven-war-plugin</artifactId>-->
-                <!--<version>2.6</version>-->
-                <!--<configuration>-->
-                    <!--<attachClasses>true</attachClasses>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-release-plugin</artifactId>-->
-                <!--<version>2.5</version>-->
-                <!--<configuration>-->
-                    <!--<autoVersionSubmodules>true</autoVersionSubmodules>-->
-                    <!--<useReleaseProfile>false</useReleaseProfile>-->
-                    <!--<releaseProfiles>release</releaseProfiles>-->
-                    <!--<goals>deploy</goals>-->
-                    <!--&lt;!&ndash; Keep the tags simple in this project with just the version name &ndash;&gt;-->
-                    <!--<tagNameFormat>@{project.version}</tagNameFormat>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-
-
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
                 <configuration>
-                    <!-- exclude jars copied "physically" from the webapp overlay - so we only get those resolved by Maven's dependency management -->
-                    <dependentWarExcludes>WEB-INF/lib/*.jar</dependentWarExcludes>
+                    <attachClasses>true</attachClasses>
                 </configuration>
             </plugin>
-
-            <!-- Cargo with Tomcat 8 starts here -->
-
             <plugin>
-                <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven2-plugin</artifactId>
-                <version>1.5.0</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5</version>
                 <configuration>
-                    <container>
-                        <!-- https://codehaus-cargo.github.io/cargo/Maven2+Plugin+Reference+Guide.html#Maven2PluginReferenceGuide-container -->
-                        <containerId>tomcat8x</containerId>
-                        <zipUrlInstaller>
-                            <url>http://repo1.maven.org/maven2/org/apache/tomcat/tomcat/8.5.4/tomcat-8.5.4.zip</url>
-                        </zipUrlInstaller>
-                        <!-- Instead of downloading the container, you can also reuse an existing installation by settings its directory:
-                          <home>/Users/horsti/files/tomcats/apache-tomcat-8.5.4</home> -->
-                        <output>${project.build.directory}/tomcat8x/container.log</output> 
-                        <!-- If true, then the file specified by <output> will not be erased across different runs -->
-                        <append>false</append>
-                        <!-- set this value if your web app is taking some time to start -->
-                        <!--timeout>360000</timeout-->
-                    </container>
-                    <configuration>
-                        <type>standalone</type>
-                        <home>${project.build.directory}/tomcat8x</home>
-                        <properties>
-                            <cargo.servlet.port>8080</cargo.servlet.port>
-                            <cargo.logging>high</cargo.logging>
-                            <cargo.jvmargs>-XX:MaxPermSize=512m -Xms256m -Xmx3072m -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 -XX:+DisableExplicitGC -Xverify:none -Djava.awt.headless=true</cargo.jvmargs>
-                        </properties>
-                    </configuration>
-                    <deployables>
-                        <deployable>
-                            <groupId>${project.groupId}</groupId>
-                            <artifactId>${project.artifactId}</artifactId>
-                            <type>war</type>
-                            <properties>
-                                <!-- set the context for your web app so the correct configuration is applied -->
-                                <context>/dev</context>
-                            </properties>
-                        </deployable>
-                    </deployables>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <goals>deploy</goals>
+                    <!-- Keep the tags simple in this project with just the version name -->
+                    <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
-
 
         </plugins>
     </build>
