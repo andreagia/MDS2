@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:form="http://www.w3.org/1999/xhtml">
 
 <head>
 
@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-   <meta http-equiv="refresh" content="30">
+   <!--<meta http-equiv="refresh" content="30">-->
 
     <title>MDS2</title>
 
@@ -77,14 +77,42 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">ORDER PARAMETER ANALYSIS</h1>
+                <h1 class="page-header"> NMR ORDER PARAMETER ANALYSIS</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
 
+
+        <form action="/service/runShellS2" method="post" id="submitForm">
+
+            <fieldset style="width: 300px;">
+                <legend>Calculation parameters</legend>
+                <ol>
+                    <li>
+                        <p><label>Trajectory File </label>
+                            <select type="text" name="fileNC" id="getfilesnc"></select>
+                    </li>
+                    <li>
+                        <label >PDB File</label>
+                        <select type="text" name="filePDB" id="getfilespdb"></select>
+                    </li>
+
+                </ol>
+            </fieldset>
+
+            <fieldset style="width: 300px;">
+                <input id="submitId" class="btn btn-success" type="submit" value="Run Calculation">
+            </fieldset>
+        </form>
+
+
+        <p>
+
+
+        </p>
         <!--// per popolare http://productdesignsagain.blogspot.it/2016/01/making-morris-graph-from-bootstrap.html-->
         <!-- /.row -->
-        <button onclick="window.location.href='/service/runShell'" type="button" class="btn btn-success">Run Calculation</button>
+        <!--<button onclick="window.location.href='/service/runShell'" type="button" class="btn btn-success">Run Calculation</button>-->
         <button onclick="window.location.href='/service/rmShell'" type="button" class="btn btn-success">Remove Data</button>
         <div class="row">
             <div class="col-lg-6">

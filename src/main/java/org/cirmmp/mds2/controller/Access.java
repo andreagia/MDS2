@@ -2,25 +2,25 @@ package org.cirmmp.mds2.controller;
 
 
 import com.google.gson.Gson;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.cirmmp.mds2.chart.FileS2;
 import org.cirmmp.mds2.chart.arrayBean;
+import org.cirmmp.mds2.model.FormS2;
 import org.cirmmp.mds2.services.RunAnalysis;
 import org.cirmmp.mds2.services.RunAsync;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -83,17 +83,20 @@ public class Access  {
         return "redirect:/html/adm/pages/morris.html";
     }
 
-    @RequestMapping(value="runShell",method = RequestMethod.GET)
-    public String runShell() throws Exception {
+    @RequestMapping(value="runShellS2", method = RequestMethod.POST)
+    public String runShell(@RequestBody FormS2 formS2, HttpServletRequest request) throws Exception {
 
-
+        logger.info("----RISULTATI--------");
+        logger.info(formS2.getFileNC());
+        logger.info(formS2.getFilePDB());
+        logger.info("----RISULTATI--------");
         String fullPath = context.getRealPath("/WEB-INF/classes/script/create_bv_inpt.py");
         String dataPath = context.getRealPath("/html/tmp");
         String path = fullPath.substring(0, fullPath.lastIndexOf("/")+1);
         String webinf = fullPath.substring(0, fullPath.lastIndexOf("WEB-INF")+7);
 
         logger.info("SONO IN");
-        String command_run = "/bin/bash " + path + "runcpptraj.sh "+ path + " " + dataPath;
+        String command_run = "/bin/bash " + path + "runcpptraj.sh "+ path + " " + dataPath + " " + formS2.getFileNC() + " "+ formS2.getFilePDB() ;
         logger.info(command_run);
         logger.info(webinf);
         logger.info("DATAPATH");
@@ -126,7 +129,53 @@ public class Access  {
     }
 
 
+    @RequestMapping(value = "/getfilesnameNC")
+    public @ResponseBody
+    String GetFilesNameNC()  {
 
+        File dir = new File("/tmp/onedata/MDAnalysis");
+        if (! dir.exists()){
+            dir.mkdir();
+            // If you require it to make the entire directory path including parents,
+            // use directory.mkdirs(); here instead.
+        }
+        FileFilter fileFilter = new WildcardFileFilter("*.nc");
+        File[] files = dir.listFiles(fileFilter);
+
+        ArrayList filPaths = new ArrayList();
+        for (File file : files) {
+            filPaths.add(file.getAbsolutePath());
+        }
+        //return filPaths;
+        Gson gson = new Gson();
+        logger.info("GETFILESNAME");
+        logger.info(filPaths.toString());
+        return gson.toJson(filPaths);
+    }
+
+    @RequestMapping(value = "/getfilesnamePDB")
+    public @ResponseBody
+    String GetFilesNamePDB()  {
+
+        File dir = new File("/tmp/onedata/MDAnalysis");
+        if (! dir.exists()){
+            dir.mkdir();
+            // If you require it to make the entire directory path including parents,
+            // use directory.mkdirs(); here instead.
+        }
+        FileFilter fileFilter = new WildcardFileFilter("*.pdb");
+        File[] files = dir.listFiles(fileFilter);
+
+        ArrayList filPaths = new ArrayList();
+        for (File file : files) {
+            filPaths.add(file.getAbsolutePath());
+        }
+        //return filPaths;
+        Gson gson = new Gson();
+        logger.info("GETFILESNAME");
+        logger.info(filPaths.toString());
+        return gson.toJson(filPaths);
+    }
 
     @RequestMapping(value = "/dashboard")
     public @ResponseBody
