@@ -276,13 +276,12 @@
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.2.9.v20150224</version>
+                <version>9.4.4.v20170414</version>
                 <configuration>
-                    <jettyXml>
-                        ${project.basedir}/jetty.xml,${project.basedir}/jetty-http.xml,${project.basedir}/jetty-ssl.xml,${project.basedir}/jetty-https.xml
-                    </jettyXml>
+                    <jettyXml>jetty.xml,jetty-http.xml,jetty-ssl.xml,jetty-https.xml</jettyXml>
                 </configuration>
             </plugin>
+
 
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
