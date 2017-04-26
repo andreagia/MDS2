@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!--
  =============================================================
 -->
@@ -13,10 +14,7 @@
 -->
 <Configure id="sslContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory">
     <Set name="KeyStorePath">
-        <Property name="jetty.base" default="."/>
-        /
-        <Property name="jetty.keystore" default="src/test/resources/jetty.keystore"/>
-    </Set>
+        ./jetty.keystore</Set>
     <Set name="KeyStorePassword">
         <Property name="jetty.keystore.password" default="secret"/>
     </Set>
@@ -24,10 +22,7 @@
         <Property name="jetty.keymanager.password" default="secret"/>
     </Set>
     <Set name="TrustStorePath">
-        <Property name="jetty.base" default="."/>
-        /
-        <Property name="jetty.truststore" default="src/test/resources/jetty.keystore"/>
-    </Set>
+        ./jetty.keystore</Set>
     <Set name="TrustStorePassword">
         <Property name="jetty.truststore.password" default="secret"/>
     </Set>
