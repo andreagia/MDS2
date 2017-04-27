@@ -10,8 +10,8 @@
     <global-method-security pre-post-annotations="enabled"/>
 
 <http use-expressions="true">
-<intercept-url access="hasRole('ROLE_VERIFIED')" pattern="/html/adm/**"/>
-<intercept-url pattern='/html/test.html' access='permitAll'/>
+<intercept-url access="hasRole('ROLE_VERIFIED')" pattern="/html/**"/>
+<intercept-url pattern='/test' access='permitAll'/>
 
 <logout logout-success-url="/"/>
 
