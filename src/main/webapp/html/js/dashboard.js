@@ -111,12 +111,13 @@ function callAjax() {
             Morris.Line({
                 element: 'morris-line-chart',
                 data: data,
-                xkey: 'res',
+                xkey: ['res'],
                 ykeys: ['s2'],
                 labels: ['MD S2'],
                 pointSize: 2,
                 hideHover: 'auto',
-                resize: true
+                resize: true,
+                parseTime: false
             });
 
         }
