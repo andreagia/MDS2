@@ -11,7 +11,7 @@
 
     <properties>
         <spring-version>4.3.3.RELEASE</spring-version>
-        <spring-security-version>3.2.3.RELEASE</spring-security-version>
+        <spring-security-version>4.2.2.RELEASE</spring-security-version>
         <spring-orm-version>4.1.1.RELEASE</spring-orm-version>
 
         <hibernate.version>4.3.11.Final</hibernate.version>

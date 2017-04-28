@@ -34,11 +34,4 @@
 </authentication-provider>
 </authentication-manager>
 
-    <mvc:cors>
-        <mvc:mapping path="/test"
-                     allowed-origins="*"
-                     allowed-headers="Content-Type, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Authorization, X-Requested-With, requestId, Correlation-Id"
-                     allowed-methods="GET, PUT, POST, DELETE"/>
-    </mvc:cors>
-
 </b:beans>
