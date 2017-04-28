@@ -34,7 +34,6 @@
 </authentication-provider>
 </authentication-manager>
 
-
     <mvc:cors>
         <mvc:mapping path="/test"
                      allowed-origins="*"
