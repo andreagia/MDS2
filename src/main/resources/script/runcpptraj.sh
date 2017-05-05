@@ -29,7 +29,7 @@ else
     fi
 
     python $SCRIPT/create_bv_inpt.py -v nh -p $FILEPDB -t $FILENC > $DINPUT/mds2.in
-    $AMBRHOME/bin/cpptraj -i $DINPUT/mds2.in
+    $AMBRHOME/bin/cpptraj.MPI -i $DINPUT/mds2.in
     python $SCRIPT/csv2json.py
     cp $FILEPDB $WEBINF/prot.pdb
     cp $DINPUT/tmp/ired_res.json $WEBINF
