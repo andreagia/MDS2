@@ -129,11 +129,42 @@ public class Access  {
     }
 
 
+    File CheckOnedataDir(String inDir){
+
+        File[] directories = new File(inDir).listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return file.isDirectory();
+            }
+        });
+
+        logger.info("----CHECKONEDATADIR------");
+        logger.info(directories[0].toString());
+        logger.info(String.valueOf(directories.length));
+
+        if (directories.length == 1) {
+             File dir = new File(directories[0].toString() + "/MDAnalysis");
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+            return dir;
+        } else {
+            File dir = new File(inDir+"/MDAnalysis");
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+            return dir;
+        }
+    }
+
     @RequestMapping(value = "/getfilesnameNC")
     public @ResponseBody
     String GetFilesNameNC()  {
 
-        File dir = new File("/tmp/onedata/MDAnalysis");
+        logger.info("----GETFILENC------");
+        logger.info(CheckOnedataDir("/tmp/onedata").toString());
+
+        File dir = CheckOnedataDir("/tmp/onedata");
         if (! dir.exists()){
             dir.mkdir();
             // If you require it to make the entire directory path including parents,
@@ -155,14 +186,10 @@ public class Access  {
 
     @RequestMapping(value = "/getfilesnamePDB")
     public @ResponseBody
-    String GetFilesNamePDB()  {
+    String GetFilesNamePDB() {
 
-        File dir = new File("/tmp/onedata/MDAnalysis");
-        if (! dir.exists()){
-            dir.mkdir();
-            // If you require it to make the entire directory path including parents,
-            // use directory.mkdirs(); here instead.
-        }
+
+        File dir = CheckOnedataDir("/tmp/onedata");
         FileFilter fileFilter = new WildcardFileFilter("*.pdb");
         File[] files = dir.listFiles(fileFilter);
 
