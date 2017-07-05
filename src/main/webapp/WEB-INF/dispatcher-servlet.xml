@@ -12,12 +12,14 @@
                    cache-period="31556926"/>
     <mvc:resources mapping="/webjars/**" location="/webjars/"/>
 
+    <mvc:resources mapping="/**" location="/WEB-INF/views/" />
+
     <context:component-scan base-package="org.cirmmp.mds2" />
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
         <property name="prefix">
-            <value>/WEB-INF/jsp/</value>
+            <value>/WEB-INF/views/</value>
         </property>
         <property name="suffix">
             <value>.jsp</value>
@@ -84,6 +86,13 @@
         <property name="sessionFactory" ref="md2sSessionFactory"/>
     </bean>
 
+    <bean id="multipartResolver"
+                class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+        <!-- setting maximum upload size -->
+        <property name="maxUploadSize" value="1000000" />
+
+    </bean>
 
 
 </beans>

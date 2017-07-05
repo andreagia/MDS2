@@ -16,7 +16,7 @@ public class Controllertest {
     @CrossOrigin
     @RequestMapping(value="/test",method = RequestMethod.GET)
     public String rmShell(){
-        return "helloworld";
+        return "/WEB-INF/views/helloworld.jsp";
     }
 
 

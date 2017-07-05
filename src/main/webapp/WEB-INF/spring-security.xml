@@ -10,28 +10,35 @@
 
     <global-method-security pre-post-annotations="enabled"/>
 
-<http use-expressions="true">
-<intercept-url access="hasRole('ROLE_VERIFIED')" pattern="/html/**"/>
-<intercept-url pattern='/test' access='permitAll'/>
+    <mvc:cors>
+        <mvc:mapping path="/**"
+                     allowed-origins="*"
+                     allowed-headers="Content-Type, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Authorization, X-Requested-With, requestId, Correlation-Id"
+                     allowed-methods="GET, PUT, POST, DELETE"/>
+    </mvc:cors>
 
-<logout logout-success-url="/"/>
+    <http use-expressions="true">
+        <intercept-url access="hasRole('ROLE_VERIFIED')" pattern="/html/**"/>
+        <intercept-url pattern='/test' access='permitAll'/>
+
+        <logout logout-success-url="/"/>
 
 
 
 
-<session-management session-fixation-protection="newSession">
-    <concurrency-control max-sessions="1"/>
-</session-management>
+        <session-management session-fixation-protection="newSession">
+            <concurrency-control max-sessions="1"/>
+        </session-management>
 
-<http-basic />
-</http>
-<authentication-manager>
-<authentication-provider>
-    <user-service>
-        <user name="mds2" password="${login.token}" authorities="ROLE_VERIFIED"/>
-    </user-service>
+        <http-basic />
+    </http>
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="mds2" password="${login.token}" authorities="ROLE_VERIFIED"/>
+            </user-service>
 
-</authentication-provider>
-</authentication-manager>
+        </authentication-provider>
+    </authentication-manager>
 
 </b:beans>

@@ -152,7 +152,7 @@ function showRequest(formData, jqForm, options) {
     if (cnt.length == 1) {
         if (isNaN(form.dih.value)) {
             //form.bond.value = 'You have to enter a number';
-            alert("there is some field taht is no a number in the dih ");
+            alert("there is some field that is no a number in the dih ");
             return false;
         }
     }
@@ -160,7 +160,7 @@ function showRequest(formData, jqForm, options) {
         for (i=0; i<cnt.length; i++) {
             if (isNaN(form.dih[i].value)) {
                 //form.bond[i].value = 'You have to enter a number';
-                alert("there is some field taht is no a number in the dih");
+                alert("there is some field that is no a number in the dih");
                 return false;
             }
         }

@@ -18,11 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
@@ -121,7 +117,7 @@ public class Access  {
 
         logger.info("ESCO");
 
-        ModelAndView model = new ModelAndView("helloworld");
+        ModelAndView model = new ModelAndView("/WEB-INF/views/helloworld.jsp");
         model.addObject("msg", risp);
 
         return "redirect:/html/adm/pages/morris.html";
